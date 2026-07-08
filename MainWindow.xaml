@@ -1,12 +1,42 @@
-﻿<Window x:Class="TodoApp.MainWindow"
+﻿<Window x:Class="ProductivityApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TodoApp"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Productivity Suite" Height="800" Width="1400" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded"
+        Background="{DynamicResource AppBackgroundBrush}">
+    <Window.Effect>
+        <BlurEffect Radius="0"/>
+    </Window.Effect>
+    
     <Grid>
-        <Button Margin="0,10,0,-10" Click="Button_Click"> CLick Here</Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Animated Stars Background -->
+        <Canvas x:Name="StarCanvas" Background="Transparent" Grid.ColumnSpan="2"/>
+
+        <!-- Sidebar Navigation -->
+        <Border Grid.Column="0" Background="{DynamicResource SidebarBackgroundBrush}" Padding="10">
+            <StackPanel x:Name="SidebarStack" Orientation="Vertical" VerticalAlignment="Top">
+                <TextBlock Text="⚡ Productivity" Foreground="{DynamicResource AccentBrush}" FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,20"/>
+                <Button x:Name="BtnDashboard" Content="📈 Dashboard" Click="Btn_Click" Style="{StaticResource GlowingButtonStyle}" Margin="0,8"/>
+                <Button x:Name="BtnTasks" Content="✓ Tasks" Click="Btn_Click" Style="{StaticResource GlowingButtonStyle}" Margin="0,8"/>
+                <Button x:Name="BtnPomodoro" Content="🍅 Pomodoro" Click="Btn_Click" Style="{StaticResource GlowingButtonStyle}" Margin="0,8"/>
+                <Button x:Name="BtnCalendar" Content="📅 Calendar" Click="Btn_Click" Style="{StaticResource GlowingButtonStyle}" Margin="0,8"/>
+                <Button x:Name="BtnClock" Content="🕐 Clock" Click="Btn_Click" Style="{StaticResource GlowingButtonStyle}" Margin="0,8"/>
+                <Button x:Name="BtnAnalytics" Content="📊 Analytics" Click="Btn_Click" Style="{StaticResource GlowingButtonStyle}" Margin="0,8"/>
+                <Separator Background="#1e3c72" Margin="0,15" Height="2"/>
+                <Button x:Name="BtnSettings" Content="⚙️ Settings" Click="Btn_Click" Style="{StaticResource GlowingButtonStyle}" Margin="0,8"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content Area -->
+        <Border Grid.Column="1" Background="{DynamicResource ContentBackgroundBrush}" Margin="1,0,0,0" Opacity="0.95">
+            <Border.Effect>
+                <BlurEffect Radius="1"/>
+            </Border.Effect>
+            <ContentControl x:Name="ContentControl" Margin="30"/>
+        </Border>
     </Grid>
 </Window>

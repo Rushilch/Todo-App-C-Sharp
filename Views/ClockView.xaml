@@ -1,0 +1,45 @@
+<UserControl x:Class="ProductivityApp.Views.ClockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Background="{DynamicResource ContentBackgroundBrush}">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
+            <TextBlock Text="Digital Clock" FontSize="32" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" TextAlignment="Center" Margin="0,0,0,30"/>
+
+            <Border Style="{StaticResource ModernCardStyle}" Padding="60,40" Margin="0,0,0,30" HorizontalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentTime_Display}" FontSize="96" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" TextAlignment="Center" FontFamily="Consolas"/>
+                    <TextBlock Text="{Binding CurrentDate}" FontSize="18" Foreground="{DynamicResource MutedTextBrush}" TextAlignment="Center" Margin="0,15,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource ModernCardStyle}" Padding="30" HorizontalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Timezone Information" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,20" TextAlignment="Center"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="160"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                            <TextBlock Text="Day of Week" FontSize="11" Foreground="{DynamicResource MutedTextBrush}" TextAlignment="Center"/>
+                            <TextBlock Text="{Binding DayOfWeek}" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,5,0,0" TextAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Text="Week #" FontSize="11" Foreground="{DynamicResource MutedTextBrush}" TextAlignment="Center"/>
+                            <TextBlock Text="{Binding WeekNumber}" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource DangerBrush}" Margin="0,5,0,0" TextAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                            <TextBlock Text="Days Left in Year" FontSize="11" Foreground="{DynamicResource MutedTextBrush}" TextAlignment="Center"/>
+                            <TextBlock Text="{Binding DaysLeftInYear}" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" Margin="0,5,0,0" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

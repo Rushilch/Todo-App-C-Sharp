@@ -1,0 +1,124 @@
+<UserControl x:Class="ProductivityApp.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Background="{DynamicResource ContentBackgroundBrush}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20">
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock Text="Settings" FontSize="28" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                    <TextBlock Text="Customize your productivity experience" FontSize="12" Foreground="{DynamicResource MutedTextBrush}" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <Border Style="{StaticResource ModernCardStyle}" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Appearance" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,15"/>
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="260"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Theme" FontSize="12"  Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                            <ComboBox Grid.Column="1" Background="{DynamicResource ContentBackgroundBrush}" Foreground="{DynamicResource TextBrush}" BorderBrush="{DynamicResource BorderBrushColor}" Padding="10" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="260"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Accent Color" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                            <ComboBox Grid.Column="1" Background="BLACK" Foreground="{DynamicResource TextBrush}" BorderBrush="{DynamicResource BorderBrushColor}" Padding="10" ItemsSource="{Binding AccentColors}" SelectedItem="{Binding SelectedAccentColor, Mode=TwoWay}"/>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="260"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Text Color" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                            <ComboBox Grid.Column="1" Background="Black" Foreground="{DynamicResource TextBrush}" BorderBrush="{DynamicResource BorderBrushColor}" Padding="10" ItemsSource="{Binding TextColors}" SelectedItem="{Binding SelectedTextColor, Mode=TwoWay}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ModernCardStyle}" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Notifications" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,15"/>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Enable Desktop Notifications" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                            <ToggleButton Grid.Column="1" IsChecked="{Binding EnableNotifications, Mode=TwoWay}" Width="40" Height="20" Style="{StaticResource ToggleButtonStyle}"/>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Sound Effects" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                            <ToggleButton Grid.Column="1" IsChecked="{Binding EnableSoundEffects, Mode=TwoWay}" Width="40" Height="20" Style="{StaticResource ToggleButtonStyle}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ModernCardStyle}" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Timer Preferences" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,15"/>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Default Focus Duration (minutes)" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Text="{Binding DefaultFocusDuration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="8" Background="{DynamicResource ContentBackgroundBrush}" Foreground="{DynamicResource TextBrush}" BorderBrush="{DynamicResource BorderBrushColor}" TextAlignment="Center"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Default Break Duration (minutes)" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Text="{Binding DefaultBreakDuration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="8" Background="{DynamicResource ContentBackgroundBrush}" Foreground="{DynamicResource TextBrush}" BorderBrush="{DynamicResource BorderBrushColor}" TextAlignment="Center"/>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Daily Goal (tasks)" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Text="{Binding DailyTaskGoal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="8" Background="{DynamicResource ContentBackgroundBrush}" Foreground="{DynamicResource TextBrush}" BorderBrush="{DynamicResource BorderBrushColor}" TextAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ModernCardStyle}" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Data Management" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,15"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Export Data" Background="{DynamicResource SuccessBrush}" Foreground="{DynamicResource AccentTextBrush}" BorderThickness="0" Padding="12,10" FontSize="12" FontWeight="Bold" Command="{Binding ExportDataCommand}" Cursor="Hand" Margin="0,0,10,0"/>
+                            <Button Content="Import Data" Background="{DynamicResource AccentBrush}" Foreground="{DynamicResource AccentTextBrush}" BorderThickness="0" Padding="12,10" FontSize="12" FontWeight="Bold" Command="{Binding ImportDataCommand}" Cursor="Hand" Margin="0,0,10,0"/>
+                            <Button Content="Clear All Data" Background="{DynamicResource DangerBrush}" Foreground="{DynamicResource AccentTextBrush}" BorderThickness="0" Padding="12,10" FontSize="12" FontWeight="Bold" Command="{Binding ClearDataCommand}" Cursor="Hand"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ModernCardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="About" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,10"/>
+                        <TextBlock Text="Productivity Suite v1.0.0" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
+                        <TextBlock Text="2026 Your Name. All rights reserved." FontSize="11" Foreground="{DynamicResource MutedTextBrush}" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

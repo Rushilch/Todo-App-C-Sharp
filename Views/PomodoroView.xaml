@@ -1,0 +1,72 @@
+<UserControl x:Class="ProductivityApp.Views.PomodoroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Background="{DynamicResource ContentBackgroundBrush}">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20" Width="640">
+            <TextBlock Text="Pomodoro Timer" FontSize="32" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" TextAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Stay focused with clean work and break sessions" FontSize="12" Foreground="{DynamicResource MutedTextBrush}" TextAlignment="Center" Margin="0,0,0,30"/>
+
+            <Border Style="{StaticResource ModernCardStyle}" Padding="42" Margin="0,0,0,22" HorizontalAlignment="Stretch">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding TimerDisplay}" FontSize="72" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" TextAlignment="Center" FontFamily="Consolas"/>
+                    <TextBlock Text="{Binding SessionStatus}" FontSize="14" Foreground="{DynamicResource MutedTextBrush}" TextAlignment="Center" Margin="0,15,0,0" FontStyle="Italic"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource ModernCardStyle}" Margin="0,0,0,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Sessions Today" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
+                        <TextBlock Text="{Binding SessionsCompleted}" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource DangerBrush}" Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Focus Time" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
+                        <TextBlock Text="{Binding FocusTimeMinutes}" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Break Time" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
+                        <TextBlock Text="{Binding BreakTimeMinutes}" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource ModernCardStyle}" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="Session Settings" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,15"/>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Focus Duration" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Text="{Binding FocusDuration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Padding="8" Background="{DynamicResource ContentBackgroundBrush}" Foreground="{DynamicResource TextBrush}" BorderBrush="{DynamicResource BorderBrushColor}"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Break Duration" FontSize="12" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Text="{Binding BreakDuration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Padding="8" Background="{DynamicResource ContentBackgroundBrush}" Foreground="{DynamicResource TextBrush}" BorderBrush="{DynamicResource BorderBrushColor}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Start" Background="{DynamicResource SuccessBrush}" Foreground="{DynamicResource AccentTextBrush}" Command="{Binding StartSessionCommand}" Margin="0,0,10,0"/>
+                <Button Content="Pause" Background="{DynamicResource WarningBrush}" Foreground="{DynamicResource AccentTextBrush}" Command="{Binding PauseSessionCommand}" Margin="0,0,10,0"/>
+                <Button Content="Reset" Background="{DynamicResource AccentBrush}" Foreground="{DynamicResource AccentTextBrush}" Command="{Binding ResetSessionCommand}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
