@@ -10,6 +10,7 @@ namespace ProductivityApp.ViewModels
     public class TasksViewModel : BaseViewModel
     {
         private readonly ITaskService _taskService;
+        private readonly IExportService _exportService;
         private ObservableCollection<TaskItem> _tasks = new();
         private ObservableCollection<TaskItem> _highPriorityTasks = new();
         private ObservableCollection<TaskItem> _mediumPriorityTasks = new();
@@ -138,10 +139,12 @@ namespace ProductivityApp.ViewModels
         public ICommand AddTaskCommand { get; }
         public ICommand DeleteTaskCommand { get; }
         public ICommand ToggleTaskCompletedCommand { get; }
+        public ICommand ExportTasksCommand { get; }
 
-        public TasksViewModel(ITaskService taskService)
+        public TasksViewModel(ITaskService taskService, IExportService exportService)
         {
             _taskService = taskService;
+            _exportService = exportService;
 
             // Initialize categories
             Categories.Add("Work");
@@ -158,6 +161,7 @@ namespace ProductivityApp.ViewModels
             AddTaskCommand = new RelayCommand(_ => AddNewTask());
             DeleteTaskCommand = new RelayCommand<TaskItem>(task => _ = DeleteTaskAsync(task));
             ToggleTaskCompletedCommand = new RelayCommand<TaskItem>(task => _ = ToggleTaskCompletedAsync(task));
+            ExportTasksCommand = new RelayCommand(_ => _ = ExportTasksAsync("csv"));
 
             _ = LoadTasksAsync();
         }
@@ -243,6 +247,20 @@ namespace ProductivityApp.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine($"Error adding task: {ex.Message}");
                 MessageBox.Show($"Could not add task: {ex.Message}", "Task Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public async Task ExportTasksAsync(string format = "csv")
+        {
+            try
+            {
+                var path = await _exportService.ExportTasksAsync(Tasks.ToList(), format);
+                MessageBox.Show($"Tasks exported to: {path}", "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error exporting tasks: {ex.Message}");
+                MessageBox.Show($"Could not export tasks: {ex.Message}", "Export Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

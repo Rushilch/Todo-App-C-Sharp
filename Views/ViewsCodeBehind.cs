@@ -95,6 +95,23 @@ namespace ProductivityApp.Views
         {
             InitializeComponent();
         }
+
+        private async void AddEventButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is not ViewModels.CalendarViewModel vm)
+                return;
+
+            var dialog = new AddEventWindow { Owner = Window.GetWindow(this) };
+            if (dialog.ShowDialog() == true && dialog.ResultEvent != null)
+            {
+                var ev = dialog.ResultEvent;
+                // Set date to currently selected date
+                ev.EventDate = vm.SelectedDate.Date;
+                ev.CreatedAt = System.DateTime.Now;
+
+                await vm.AddEventAsync(ev);
+            }
+        }
     }
     public partial class ClockView : UserControl 
     {

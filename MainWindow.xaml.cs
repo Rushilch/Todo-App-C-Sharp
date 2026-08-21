@@ -165,6 +165,61 @@ namespace ProductivityApp
             }
         }
 
+        private void MainWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            var ctrl = (System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Control) == System.Windows.Input.ModifierKeys.Control;
+            if (!ctrl) return;
+
+            // Ctrl+1..7 to switch pages
+            switch (e.Key)
+            {
+                case System.Windows.Input.Key.D1:
+                    ShowDashboard();
+                    e.Handled = true;
+                    break;
+                case System.Windows.Input.Key.D2:
+                    ShowTasks();
+                    e.Handled = true;
+                    break;
+                case System.Windows.Input.Key.D3:
+                    ShowPomodoro();
+                    e.Handled = true;
+                    break;
+                case System.Windows.Input.Key.D4:
+                    ShowCalendar();
+                    e.Handled = true;
+                    break;
+                case System.Windows.Input.Key.D5:
+                    ShowClock();
+                    e.Handled = true;
+                    break;
+                case System.Windows.Input.Key.D6:
+                    ShowAnalytics();
+                    e.Handled = true;
+                    break;
+                case System.Windows.Input.Key.D7:
+                    ShowSettings();
+                    e.Handled = true;
+                    break;
+                case System.Windows.Input.Key.N:
+                    // New task when on Tasks view
+                    if (_viewModel.CurrentViewModel is TasksViewModel tvm)
+                    {
+                        tvm.AddTaskCommand.Execute(null);
+                        e.Handled = true;
+                    }
+                    break;
+                case System.Windows.Input.Key.P:
+                    // Start pomodoro when on Pomodoro view
+                    if (_viewModel.CurrentViewModel is PomodoroViewModel pvm)
+                    {
+                        pvm.StartSessionCommand.Execute(null);
+                        e.Handled = true;
+                    }
+                    break;
+            }
+        }
+
         private void ShowDashboard()
         {
             _viewModel.NavigateToPage("Dashboard");

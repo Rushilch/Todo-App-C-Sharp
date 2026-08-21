@@ -30,6 +30,28 @@ namespace ProductivityApp
                 var dbContext = _serviceProvider.GetRequiredService<ProductivityDbContext>();
                 await dbContext.InitializeDatabaseAsync();
 
+                // Process any due recurring tasks immediately after DB init
+                try
+                {
+                    var recurring = _serviceProvider.GetRequiredService<IRecurringTaskService>();
+                    await recurring.ProcessDueRecurrencesAsync();
+                }
+                catch
+                {
+                    // non-fatal if recurring processing fails
+                }
+
+                // Start background REST API (local only)
+                try
+                {
+                    var api = _serviceProvider.GetRequiredService<IRestApiService>();
+                    _ = api.StartAsync();
+                }
+                catch
+                {
+                    // non-fatal
+                }
+
                 // Create and show main window
                 var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
                 mainWindow.Show();
@@ -58,6 +80,14 @@ namespace ProductivityApp
             services.AddSingleton<ICalendarService, CalendarService>();
             services.AddSingleton<ISettingsService, SettingsService>();
             services.AddSingleton<IAnalyticsService, AnalyticsService>();
+            // Notification service (simple system tray notifications)
+            services.AddSingleton<INotificationService, NotificationService>();
+            // Recurring task scheduler/service
+            services.AddSingleton<IRecurringTaskService, RecurringTaskService>();
+            // User, Sync and REST API services
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<ISyncService, SyncService>();
+            services.AddSingleton<IRestApiService, RestApiService>();
 
             // Register ViewModels
             services.AddSingleton<DashboardViewModel>();
@@ -68,6 +98,9 @@ namespace ProductivityApp
             services.AddSingleton<SettingsViewModel>();
             services.AddSingleton<AnalyticsViewModel>();
             services.AddSingleton<MainViewViewModel>();
+            
+            // Export service used by TasksViewModel
+            services.AddSingleton<IExportService, ExportService>();
 
             // Register Views
             services.AddSingleton<MainWindow>();

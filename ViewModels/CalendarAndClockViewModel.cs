@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Windows;
 using ProductivityApp.Data.Models;
 using ProductivityApp.MVVM;
 using ProductivityApp.Services;
@@ -63,6 +64,7 @@ namespace ProductivityApp.ViewModels
         public ICommand PreviousMonthCommand { get; }
         public ICommand NextMonthCommand { get; }
         public ICommand AddEventCommand { get; }
+        public ICommand SelectDateCommand { get; }
 
         public CalendarViewModel(ICalendarService calendarService, ITaskService taskService)
         {
@@ -74,6 +76,7 @@ namespace ProductivityApp.ViewModels
             PreviousMonthCommand = new RelayCommand(_ => NavigatePreviousMonth());
             NextMonthCommand = new RelayCommand(_ => NavigateNextMonth());
             AddEventCommand = new RelayCommand(_ => AddNewEvent());
+            SelectDateCommand = new RelayCommand<DateTime>(d => { SelectedDate = d; });
 
             _ = LoadMonthEventsAsync();
         }

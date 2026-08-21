@@ -50,6 +50,18 @@ namespace ProductivityApp.Data.Models
         public DateTime CreatedAt { get; set; }
     }
 
+    // Recurring tasks support (simple rules: Daily, Weekly, Monthly)
+    public class RecurringTask
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public string RecurrenceRule { get; set; } = "Daily"; // e.g., "Daily", "Weekly", "Monthly"
+        public DateTime NextOccurrence { get; set; }
+        public bool IsActive { get; set; } = true;
+        public DateTime CreatedAt { get; set; }
+    }
+
     public class CalendarEvent
     {
         public int Id { get; set; }
@@ -74,6 +86,14 @@ namespace ProductivityApp.Data.Models
         public bool NotificationsEnabled { get; set; } = true;
         public bool Use24HourFormat { get; set; } = false;
         public string Theme { get; set; } = "Light";
+        public int? CurrentUserId { get; set; }
+    }
+
+    public class UserProfile
+    {
+        public int Id { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
     }
 
     public class DailyStats

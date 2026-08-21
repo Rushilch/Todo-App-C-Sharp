@@ -3,35 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ProductivityApp">
     <Application.Resources>
-        <SolidColorBrush x:Key="AppBackgroundBrush" Color="#1E1E2E"/>
-        <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#181825"/>
-        <SolidColorBrush x:Key="ContentBackgroundBrush" Color="#11111B"/>
-        <SolidColorBrush x:Key="SurfaceBrush" Color="#313244"/>
-        <SolidColorBrush x:Key="SurfaceAltBrush" Color="#45475A"/>
-        <SolidColorBrush x:Key="TextBrush" Color="#CDD6F4"/>
-        <SolidColorBrush x:Key="MutedTextBrush" Color="#A6ADC8"/>
-        <SolidColorBrush x:Key="SubtleTextBrush" Color="#BAC2DE"/>
-        <SolidColorBrush x:Key="BorderBrushColor" Color="#45475A"/>
-        <SolidColorBrush x:Key="AccentBrush" Color="#89B4FA"/>
-        <SolidColorBrush x:Key="AccentTextBrush" Color="#11111B"/>
-        <SolidColorBrush x:Key="DangerBrush" Color="#F38BA8"/>
-        <SolidColorBrush x:Key="SuccessBrush" Color="#A6E3A1"/>
-        <SolidColorBrush x:Key="WarningBrush" Color="#F9E2AF"/>
+        <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F6F8FA"/>
+        <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="ContentBackgroundBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SurfaceAltBrush" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#0F172A"/>
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#64748B"/>
+        <SolidColorBrush x:Key="SubtleTextBrush" Color="#94A3B8"/>
+        <SolidColorBrush x:Key="BorderBrushColor" Color="#E6EEF8"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#2563EB"/>
+        <SolidColorBrush x:Key="AccentTextBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="DangerBrush" Color="#EF4444"/>
+        <SolidColorBrush x:Key="SuccessBrush" Color="#10B981"/>
+        <SolidColorBrush x:Key="WarningBrush" Color="#F59E0B"/>
         <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#313244"/>
         <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#313244"/>
         <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="#CDD6F4"/>
         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#45475A"/>
         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#CDD6F4"/>
 
-        <!-- Modern Gradient Background Definition -->
-        <LinearGradientBrush x:Key="NightSkyGradient" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#0a0e27" Offset="0"/>
-            <GradientStop Color="#1a1a4d" Offset="0.3"/>
-            <GradientStop Color="#2d1b4e" Offset="0.6"/>
-            <GradientStop Color="#0f0f2e" Offset="1"/>
+        <!-- Modern Gradient Background Definition (subtle) -->
+        <LinearGradientBrush x:Key="SubtleGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFFFFF" Offset="0"/>
+            <GradientStop Color="#F8FAFC" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Glowing Button Style -->
+        <!-- Glowing Button Style (clean) -->
         <Style x:Key="GlowingButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
@@ -56,7 +54,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource SurfaceAltBrush}"/>
                                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
@@ -77,7 +75,7 @@
             <Setter Property="Padding" Value="20"/>
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect BlurRadius="18" ShadowDepth="4" Opacity="0.14" Color="#000000"/>
+                    <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -100,10 +98,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Opacity" Value="0.88"/>
+                                <Setter TargetName="border" Property="Opacity" Value="0.96"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Opacity" Value="0.76"/>
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -113,14 +111,9 @@
 
         <!-- Title Style -->
         <Style x:Key="TitleTextStyle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#00d4ff"/>
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.6" Color="#00d4ff"/>
-                </Setter.Value>
-            </Setter>
         </Style>
 
         <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">

@@ -10,8 +10,10 @@ namespace ProductivityApp.Data
         public DbSet<TaskItem> Tasks { get; set; } = null!;
         public DbSet<PomodoroSession> PomodoroSessions { get; set; } = null!;
         public DbSet<TimerSession> TimerSessions { get; set; } = null!;
+        public DbSet<RecurringTask> RecurringTasks { get; set; } = null!;
         public DbSet<CalendarEvent> CalendarEvents { get; set; } = null!;
         public DbSet<AppSettings> AppSettings { get; set; } = null!;
+        public DbSet<UserProfile> UserProfiles { get; set; } = null!;
         public DbSet<DailyStats> DailyStats { get; set; } = null!;
 
         private static string DbPath { get; } = System.IO.Path.Join(
@@ -101,6 +103,18 @@ namespace ProductivityApp.Data
                 """);
 
             await Database.ExecuteSqlRawAsync("""
+                CREATE TABLE IF NOT EXISTS "RecurringTasks" (
+                    "Id" INTEGER NOT NULL CONSTRAINT "PK_RecurringTasks" PRIMARY KEY AUTOINCREMENT,
+                    "Title" TEXT NOT NULL,
+                    "Description" TEXT NULL,
+                    "RecurrenceRule" TEXT NOT NULL,
+                    "NextOccurrence" TEXT NOT NULL,
+                    "IsActive" INTEGER NOT NULL,
+                    "CreatedAt" TEXT NOT NULL
+                );
+                """);
+
+            await Database.ExecuteSqlRawAsync("""
                 CREATE TABLE IF NOT EXISTS "CalendarEvents" (
                     "Id" INTEGER NOT NULL CONSTRAINT "PK_CalendarEvents" PRIMARY KEY AUTOINCREMENT,
                     "Title" TEXT NOT NULL,
@@ -124,7 +138,16 @@ namespace ProductivityApp.Data
                     "DarkModeEnabled" INTEGER NOT NULL,
                     "NotificationsEnabled" INTEGER NOT NULL,
                     "Use24HourFormat" INTEGER NOT NULL,
-                    "Theme" TEXT NOT NULL
+                    "Theme" TEXT NOT NULL,
+                    "CurrentUserId" INTEGER NULL
+                );
+                """);
+
+            await Database.ExecuteSqlRawAsync("""
+                CREATE TABLE IF NOT EXISTS "UserProfiles" (
+                    "Id" INTEGER NOT NULL CONSTRAINT "PK_UserProfiles" PRIMARY KEY AUTOINCREMENT,
+                    "UserName" TEXT NOT NULL,
+                    "CreatedAt" TEXT NOT NULL
                 );
                 """);
 
@@ -148,8 +171,9 @@ namespace ProductivityApp.Data
                     "DarkModeEnabled",
                     "NotificationsEnabled",
                     "Use24HourFormat",
-                    "Theme")
-                VALUES (1, 25, 5, 15, 4, 0, 1, 0, 'Catppuccin Mocha|Blue|Default');
+                    "Theme",
+                    "CurrentUserId")
+                VALUES (1, 25, 5, 15, 4, 0, 1, 0, 'Default', NULL);
                 """);
         }
     }

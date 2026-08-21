@@ -20,10 +20,12 @@ namespace ProductivityApp.Services
     public class TaskService : ITaskService
     {
         private readonly ProductivityDbContext _dbContext;
+        private readonly INotificationService _notificationService;
 
-        public TaskService(ProductivityDbContext dbContext)
+        public TaskService(ProductivityDbContext dbContext, INotificationService notificationService)
         {
             _dbContext = dbContext;
+            _notificationService = notificationService;
         }
 
         public async Task<List<TaskItem>> GetAllTasksAsync()
@@ -60,6 +62,20 @@ namespace ProductivityApp.Services
             task.LastModified = DateTime.Now;
             _dbContext.Tasks.Add(task);
             await _dbContext.SaveChangesAsync();
+
+            // If task is due soon (within 1 hour), show a notification
+            try
+            {
+                if (task.DueDate != default && task.DueDate <= DateTime.Now.AddHours(1) && !task.IsCompleted)
+                {
+                                    await _notificationService.ShowNotificationAsync("Task Due Soon", $"{task.Title} is due at {task.DueDate.ToShortTimeString()}");
+                }
+            }
+            catch
+            {
+                // Ignore notification errors
+            }
+
             return task;
         }
 

@@ -16,10 +16,12 @@ namespace ProductivityApp.Services
     public class PomodoroService : IPomodoroService
     {
         private readonly ProductivityDbContext _dbContext;
+        private readonly INotificationService _notificationService;
 
-        public PomodoroService(ProductivityDbContext dbContext)
+        public PomodoroService(ProductivityDbContext dbContext, INotificationService notificationService)
         {
             _dbContext = dbContext;
+            _notificationService = notificationService;
         }
 
         public async Task<PomodoroSession> StartSessionAsync(string? taskName = null)
@@ -38,6 +40,17 @@ namespace ProductivityApp.Services
 
             _dbContext.PomodoroSessions.Add(session);
             await _dbContext.SaveChangesAsync();
+
+            // Notify user that a Pomodoro session has started
+            try
+            {
+                await _notificationService.ShowNotificationAsync("Pomodoro Started", $"Focus for {duration} minutes{(taskName != null ? $": {taskName}" : string.Empty)}");
+            }
+            catch
+            {
+                // Ignore notification errors
+            }
+
             return session;
         }
 
@@ -50,6 +63,16 @@ namespace ProductivityApp.Services
                 session.IsCompleted = true;
                 _dbContext.PomodoroSessions.Update(session);
                 await _dbContext.SaveChangesAsync();
+
+                // Notify user that the Pomodoro session completed
+                try
+                {
+                    await _notificationService.ShowNotificationAsync("Pomodoro Completed", $"Session {session.SessionNumber} completed.");
+                }
+                catch
+                {
+                    // Ignore notification errors
+                }
             }
 
             return session ?? new PomodoroSession();
